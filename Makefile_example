@@ -1,0 +1,17 @@
+CXX = g++
+CXXFLAGS = -Wall -lm -std=c++17
+BUILD_DIR = ./build
+SRCS = $(shell ls *.cpp)
+
+OBJS = $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
+
+$(BUILD_DIR)/$(notdir $(shell pwd)): $(OBJS)
+	$(CXX) $(OBJS) -o $@
+
+$(BUILD_DIR)/%.o: %.cpp
+	mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+.PHONY: clean
+clean:
+	rm -r $(BUILD_DIR)
